@@ -69,7 +69,6 @@ let cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 let cart = [];
 
-let totalQuantity = 0
 let total = 0;
 
 // Exercise 1
@@ -236,8 +235,8 @@ function addToCart(id) {
         }
         let totalQuantity = 0;
 
-        for (let counter = 0; counter < cart.length; counter++) {
-            totalQuantity += cart[counter].quantity;
+        for (let i = 0; i < cart.length; i++) {
+            totalQuantity += cart[i].quantity;
             document.getElementById("count_product").innerHTML = totalQuantity;
         }
         console.log(cart)
@@ -248,30 +247,25 @@ function addToCart(id) {
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+    
+    let totalQuantity = Number(document.getElementById("count_product").innerHTML)
 
     cart.forEach((item, index) => {
         if (item.id === id) {
             if (item.quantity > 1) {
-                item.quantity--;
+                item.quantity--
                 item.subtotal = item.subtotal - item.price
+                totalQuantity--
             } else {
-                cart.splice(index, 1);
+                cart.splice(index, 1)
+                totalQuantity--
+
             }
         }
     });
-    applyPromotionsCart()
+
+    document.getElementById("count_product").innerHTML = totalQuantity;
     printCart();
-
-    let totalQuantity = Number(document.getElementById("count_product").innerHTML)
-    for (let i = 0; i < cart.length; i++) {
-        totalQuantity -= 1
-        document.getElementById("count_product").innerHTML = totalQuantity
-    }
-    if (cart.length === 0) {
-        totalQuantity = 0
-        document.getElementById("count_product").innerHTML = totalQuantity
-    }
-
     console.log(cart);
 
     /* for (let i = 0; i < cart.length; i++) {
@@ -289,4 +283,5 @@ function removeFromCart(id) {
         printCart()
         console.log(cart)
     } */
+
 }
