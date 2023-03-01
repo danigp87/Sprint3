@@ -69,6 +69,7 @@ let cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 let cart = [];
 
+let totalQuantity = 0
 let total = 0;
 
 // Exercise 1
@@ -83,6 +84,9 @@ function buy(id) {
     }
     console.log(products[id - 1])
     console.log(cartList)
+
+    document.getElementById("count_product").innerHTML = cartList.length;
+    generateCart();
 }
 
 // Exercise 2
@@ -229,10 +233,15 @@ function addToCart(id) {
                 selectedFromCartList.subtotal = selectedFromCartList.quantity * selectedFromCartList.price;
             }
             applyPromotionsCart()
-
         }
+        let totalQuantity = 0;
+
+        for (let counter = 0; counter < cart.length; counter++) {
+            totalQuantity += cart[counter].quantity;
+            document.getElementById("count_product").innerHTML = totalQuantity;
+        }
+        console.log(cart)
     }
-    console.log(cart)
 }
 
 // Exercise 9
@@ -252,6 +261,17 @@ function removeFromCart(id) {
     });
     applyPromotionsCart()
     printCart();
+
+    let totalQuantity = Number(document.getElementById("count_product").innerHTML)
+    for (let i = 0; i < cart.length; i++) {
+        totalQuantity -= 1
+        document.getElementById("count_product").innerHTML = totalQuantity
+    }
+    if (cart.length === 0) {
+        totalQuantity = 0
+        document.getElementById("count_product").innerHTML = totalQuantity
+    }
+
     console.log(cart);
 
     /* for (let i = 0; i < cart.length; i++) {
